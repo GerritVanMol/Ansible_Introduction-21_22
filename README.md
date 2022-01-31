@@ -1,4 +1,4 @@
-# Stage-GVM 2020-2021
+# Stage-GVM 2021-2022
 
 
 
@@ -16,3 +16,5 @@ Om de vooruitgang/stappen van de opstelling bij te houden heb ik een logboek aan
 Vanaf vandaag (22/11) is het 1 dagje per week op stage (elke maandag tot aan kerst) om de werkdruk niet te hoog te leggen, aangezien ik nog andere vakken volg en ook daar graag voor wil slagen :)
 
 ## Week 2
+(Het is me opgevallen dat ik de repo een verkeerde naam heb gegeven => jaartal)
+31 Jan start van semester 2, navragen wat moet gebeuren en update ontvangen rond netwerk naam verandering...
