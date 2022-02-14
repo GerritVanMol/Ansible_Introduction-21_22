@@ -1,0 +1,6 @@
+---
+ansible_network_os: ce
+ansible_port: 22
+ansible_user: admin
+ansible_password: Azerty123
+ansible_connection: network_cli

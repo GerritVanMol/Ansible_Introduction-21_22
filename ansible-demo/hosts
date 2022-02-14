@@ -1,0 +1,21 @@
+--- 
+all: 
+  children: 
+    core_networking_nodes: 
+      hosts: 
+        switch1: 
+          ansible_host: 10.0.89.142
+    leaf_networking_nodes:
+      hosts:
+        switch2:
+          ansible_host: 10.0.89.143
+        switch3:
+          ansible_host: 10.0.89.144
+    
+controlhosts: 
+  hosts: 
+    controlnode1: 
+      ansible_host: "10.0.89.141"
+
+
+

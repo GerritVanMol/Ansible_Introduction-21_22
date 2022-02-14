@@ -1,0 +1,59 @@
+---
+- name: Retrieve leaf switch configuration(s) - SW2/3
+  ce_command:
+    commands: 
+      - display current-configuration
+  register: result
+  
+- debug: 
+    var: result
+
+- name: Create ethernet trunk 1 - SW2/3
+  ce_command:
+    commands:
+      - system-view
+      - interface eth-trunk 1
+      - undo shutdown
+      - quit
+
+- name: Add interfaces to ethernet trunk 1 - SW2/3
+  ce_command:
+    commands:
+      - system-view
+      - interface gigabitethernet 0/0/3
+      - eth-trunk 1
+      - undo shutdown
+      - quit
+      - interface gigabitethernet 0/0/4
+      - eth-trunk 1
+      - undo shutdown
+      - quit
+
+- name: Create vlans 10, 20 and add to trunk interface 1 - SW2/3
+  ce_command:
+    commands:
+      - system-view
+      - vlan batch 10 20
+      - interface eth-trunk 1
+      - port link-type trunk
+      - port trunk allow-pass vlan 10 20
+      - quit
+
+
+- name: Display updated configuration (trunk ports)- SW2/3
+  ce_command:
+    commands: 
+      #- display eth-trunk 1
+      - display current-configuration
+  register: switch_config
+
+- debug: 
+    var: switch_config
+
+- name: Save output to local directory (on control node)
+  copy:
+    content: "{{ switch_config.stdout | replace('\\n', '\n') }}"           
+    dest: "/home/student/{{ inventory_hostname }}.cfg"
+
+- debug:
+    msg: "Config saved succesfully"

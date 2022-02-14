@@ -1,0 +1,38 @@
+---
+- name: Start configuring core networking devices
+  gather_facts: false
+  hosts:
+    - core_networking_nodes
+  roles:
+    - core-switch
+
+- name: Start configuring leaf networking devices
+  gather_facts: false
+  hosts:
+    - leaf_networking_nodes
+  roles:
+    - leaf-switch
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

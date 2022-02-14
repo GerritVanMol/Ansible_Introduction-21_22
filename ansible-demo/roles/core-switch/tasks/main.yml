@@ -1,0 +1,92 @@
+---
+- name: Retrieve current switch configuration - SW1
+  ce_command:
+    commands: 
+      - display current-configuration
+  register: output
+  
+- debug: 
+    var: output
+
+
+- name: Create ethernet trunk 1/2 - SW1
+  ce_command:
+    commands:
+      - system-view
+      - interface eth-trunk 1
+      - undo shutdown
+      - quit
+      - interface eth-trunk 2
+      - undo shutdown
+      - quit
+
+
+- name: Add interfaces to ethernet trunk 1/2 - SW1
+  ce_command:
+    commands:
+      - system-view
+      - interface gigabitethernet 1/0/3
+      - eth-trunk 1
+      - undo shutdown
+      - quit
+      - interface gigabitethernet 1/0/4
+      - eth-trunk 1
+      - undo shutdown
+      - quit
+      - interface gigabitethernet 1/0/5
+      - eth-trunk 2
+      - undo shutdown
+      - quit
+      - interface gigabitethernet 1/0/6
+      - eth-trunk 2
+      - undo shutdown
+      - quit
+
+- name: Create vlans 10, 20 and add to trunk interface 1/2 - SW1
+  ce_command:
+    commands:
+      - system-view
+      - vlan batch 10 20
+      - interface eth-trunk 1
+      - port link-type trunk
+      - port trunk allow-pass vlan 10 20
+      - vlan batch 10 20
+      - interface eth-trunk 2
+      - port link-type trunk
+      - port trunk allow-pass vlan 10 20
+      - quit
+
+- name: Display updated configuration (trunk ports) - SW1
+  ce_command:
+    commands: 
+      #- display eth-trunk
+      - display current-configuration
+  register: switch_config
+
+- debug: 
+    var: switch_config
+
+#- name: Copy/save file from the switch to Ansible controller
+#  ansible.netcommon.net_get:
+#    src: running_cfg_core_switch.cfg
+#    dest: /home/student
+
+
+
+
+- name: Save output to local directory (on control node)
+  copy:
+    content: "{{ switch_config.stdout | replace('\\n', '\n') }}"           
+    dest: "/home/student/{{ inventory_hostname }}.cfg"
+
+- debug:
+    msg: "Config saved succesfully"
+
+
+
+    
+
+
+
+
+
