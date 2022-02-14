@@ -1,2 +1,6 @@
 ---
 PASSWD: Azerty123
+var1: variables
+var2: dynamically
+
+my_list: ['Item1: This is','Item2: ansible','Item3: templates']

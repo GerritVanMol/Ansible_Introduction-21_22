@@ -66,13 +66,6 @@
 - debug: 
     var: switch_config
 
-#- name: Copy/save file from the switch to Ansible controller
-#  ansible.netcommon.net_get:
-#    src: running_cfg_core_switch.cfg
-#    dest: /home/student
-
-
-
 
 - name: Save output to local directory (on control node)
   copy:
@@ -81,6 +74,11 @@
 
 - debug:
     msg: "Config saved succesfully"
+
+- name: Call template example
+  template:
+    src: example_template.j2
+    dest: /home/student/template-output.txt
 
 
 
